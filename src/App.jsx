@@ -11,9 +11,21 @@ import Profile from "./pages/Profile";
 export default function App() {
   const [session, setSession] = useState(null);
   const [profile, setProfile] = useState(null);
-  const [lang, setLang] = useState("pt");
   const [page, setPage] = useState("dashboard");
   const [loadingProfile, setLoadingProfile] = useState(true);
+
+  const [lang, setLang] = useState(() => {
+    const savedLang = localStorage.getItem("bitelog_lang");
+    if (savedLang) return savedLang;
+
+    const systemLang = navigator.language || navigator.userLanguage;
+
+    return systemLang.startsWith("pt") ? "pt" : "en";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("bitelog_lang", lang);
+  }, [lang]);
 
   useEffect(() => {
     if (window.location.hash.includes("type=recovery")) {
@@ -85,9 +97,9 @@ export default function App() {
     <div className="relative min-h-[100dvh] bg-background">
       <main className="animate-in fade-in duration-500">
         {page === "dashboard" && (
-          <Dashboard session={session} setPage={setPage} />
+          <Dashboard session={session} lang={lang} setPage={setPage} />
         )}
-        {page === "history" && <History setPage={setPage} />}
+        {page === "history" && <History lang={lang} setPage={setPage} />}
         {page === "profile" && (
           <Profile
             session={session}

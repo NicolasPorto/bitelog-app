@@ -38,7 +38,22 @@ export const translations = {
     confirm_password: "Confirmar Nova Senha",
     update_password: "Atualizar Senha",
     passwords_not_match: "As senhas não coincidem.",
-    success_update: "Senha atualizada com sucesso!"
+    success_update: "Senha atualizada com sucesso!",
+    calories_today: "Calorias Hoje",
+    water: "Água",
+    add_meal: "Adicionar refeição",
+    copy_yesterday: "Copiar cardápio de ontem",
+    new_meal: "Nova refeição",
+    what_ate: "O que você comeu?",
+    calories_opt: "Calorias (opcional)",
+    obs_opt: "Observações (opcional)",
+    save_meal: "Salvar Refeição",
+    history_title: "Histórico",
+    export_csv: "Exportar CSV",
+    no_history: "Nenhum histórico ainda",
+    today: "Hoje",
+    meals_count: "refeições",
+    meal_count: "refeição"
   },
   en: {
     welcome: "Welcome",
@@ -79,6 +94,21 @@ export const translations = {
     confirm_password: "Confirm New Password",
     update_password: "Update Password",
     passwords_not_match: "Passwords do not match.",
-    success_update: "Password updated successfully!"
+    success_update: "Password updated successfully!",
+    calories_today: "Calories Today",
+    water: "Water",
+    add_meal: "Add meal",
+    copy_yesterday: "Copy yesterday's menu",
+    new_meal: "New meal",
+    what_ate: "What did you eat?",
+    calories_opt: "Calories (optional)",
+    obs_opt: "Notes (optional)",
+    save_meal: "Save Meal",
+    history_title: "History",
+    export_csv: "Export CSV",
+    no_history: "No history yet",
+    today: "Today",
+    meals_count: "meals",
+    meal_count: "meal"
   }
 };

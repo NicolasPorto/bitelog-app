@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'], // Nomes dos seus ícones
       manifest: {
-        name: 'Diário Alimentar',
-        short_name: 'Diário',
+        name: 'Bitelog - Diário Alimentar',
+        short_name: 'Bitelog',
         description: 'Seu app para controle de alimentação',
         theme_color: '#14b8a6', // Cor da barra do topo do celular (Teal do Tailwind)
         background_color: '#f9fafb',
