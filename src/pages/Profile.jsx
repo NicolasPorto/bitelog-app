@@ -77,7 +77,7 @@ export default function Profile({ session, profile, lang, setLang, refreshProfil
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
                     <User className="w-5 h-5" />
                   </div>
-                  <h2 className="font-bold text-foreground">Editar Dados</h2>
+                  <h2 className="font-bold text-foreground">{t.edit}</h2>
                 </div>
                 <button onClick={handleCancelEdit} className="text-muted-foreground hover:text-foreground p-1.5 rounded-full bg-muted/50 transition-colors">
                   <X className="w-4 h-4" />
@@ -140,7 +140,7 @@ export default function Profile({ session, profile, lang, setLang, refreshProfil
           <div className="p-5 bg-card border border-border rounded-2xl shadow-sm space-y-4 animate-in fade-in duration-300">
             <div className="flex items-center gap-2 mb-2">
               <Scale className="w-5 h-5 text-primary" />
-              <h3 className="font-bold text-foreground">Evolução de Peso</h3>
+              <h3 className="font-bold text-foreground">{t.weight_evolution}</h3>
             </div>
 
             {weightLogs.length > 0 ? (
@@ -155,7 +155,7 @@ export default function Profile({ session, profile, lang, setLang, refreshProfil
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">O histórico será atualizado quando você alterar seu peso editando o perfil.</p>
+              <p className="text-xs text-muted-foreground">{t.weight_evolution_desc}</p>
             )}
           </div>
         )}
