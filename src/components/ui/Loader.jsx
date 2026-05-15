@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function Loader({
   onComplete,
   minDuration = 2000,
+  t
 }) {
   const [visible, setVisible] = useState(true);
 
@@ -65,13 +66,11 @@ export default function Loader({
             bg-primary/5
           "
         >
-          {/* Liquid wave */}
           <div className="absolute bottom-0 left-0 right-0 h-full">
             <div className="loader-wave" />
           </div>
         </div>
 
-        {/* Steam wisps */}
         <div
           className="
             absolute -top-2 left-1/2
@@ -85,7 +84,6 @@ export default function Loader({
         </div>
       </div>
 
-      {/* Brand text */}
       <div className="mt-6 text-center">
         <h1
           className="
@@ -105,7 +103,7 @@ export default function Loader({
             loader-sub-reveal
           "
         >
-          Seu diário alimentar
+          {t.your_food_diary}
         </p>
       </div>
     </div>

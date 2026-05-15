@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
 import { Home, History as HistoryIcon, User } from "lucide-react";
+import { translations } from "./translations";
 
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -23,6 +24,8 @@ export default function App() {
 
     return systemLang.startsWith("pt") ? "pt" : "en";
   });
+
+  const t = translations[lang] || translations["pt"];
 
   useEffect(() => {
     localStorage.setItem("bitelog_lang", lang);
@@ -67,14 +70,20 @@ export default function App() {
       setProfile(data);
     } catch (err) {
       console.error("Erro ao buscar perfil:", err);
-    } 
+    } finally {
+      setLoadingProfile(false);
+    }
   };
 
   if (!session) return <Auth lang={lang} setLang={setLang} />;
 
   if (loadingProfile)
     return (
-      <Loader onComplete={() => setLoadingProfile(false)} minDuration={2200} />
+      <Loader
+        onComplete={() => setLoadingProfile(false)}
+        minDuration={1200}
+        t={t}
+      />
     );
 
   if (!profile?.is_onboarded) {

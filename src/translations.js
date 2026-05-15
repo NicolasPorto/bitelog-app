@@ -65,6 +65,7 @@ export const translations = {
       dinner: "Jantar",
       other: "Outro",
     },
+    your_food_diary: "Seu diário alimentar"
   },
   en: {
     welcome: "Welcome",
@@ -132,5 +133,6 @@ export const translations = {
       dinner: "Dinner",
       other: "Other",
     },
+    your_food_diary: "Your food diary"
   }
 };
