@@ -207,7 +207,7 @@ export default function Dashboard({ session, setPage, lang }) {
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col text-foreground pb-24">
-      <Header session={session} streak={streak} lang={lang} />
+      <Header session={session} streak={streak} lang={lang} setPage={setPage} />
 
       <main className="flex-1 max-w-md mx-auto w-full px-4 py-4 space-y-4">
         <StatsCards

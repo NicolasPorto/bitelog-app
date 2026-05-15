@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../supabase";
 import { translations } from "../translations";
 import { Input } from "../components/ui/Input";
+import { InstallBanner } from "../components/ui/InstallBanner";
 
 import {
   Eye,
@@ -144,6 +145,9 @@ export default function Auth({ lang, setLang }) {
 
   return (
     <div className="relative min-h-[100dvh] bg-background flex flex-col items-center justify-center p-6 overflow-hidden">
+      
+      <InstallBanner lang={lang} />
+
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700">

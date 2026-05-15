@@ -8,7 +8,9 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Onboarding from "./pages/Onboarding";
 import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
 import Loader from "./components/ui/Loader";
+import Streak from "./components/ui/Streak";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -95,6 +97,7 @@ export default function App() {
       />
     );
   }
+  const isMainTab = ["dashboard", "history", "profile"].includes(page);
 
   return (
     <div className="relative min-h-[100dvh] bg-background">
@@ -114,6 +117,14 @@ export default function App() {
         )}
         {page === "reset-password" && (
           <ResetPassword lang={lang} onComplete={() => setPage("dashboard")} />
+        )}
+        {page === "streak" && (
+          <Streak
+            session={session}
+            streak={profile?.streak_count || 0}
+            lang={lang}
+            setPage={setPage}
+          />
         )}
       </main>
 

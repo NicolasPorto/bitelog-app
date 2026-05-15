@@ -1,6 +1,6 @@
 import { Flame } from "lucide-react";
 
-export default function Header({ session, streak, lang }) {
+export default function Header({ session, streak, lang, setPage }) {
   return (
     <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-lg border-b border-border/50 safe-top">
       <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
@@ -22,12 +22,16 @@ export default function Header({ session, streak, lang }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full shrink-0">
-          <Flame className="w-4 h-4 text-orange-500" />
-          <span className="text-sm font-bold text-orange-500">
+        {/* Transformamos em um botão clicável */}
+        <button 
+          onClick={() => setPage && setPage("streak")}
+          className="flex items-center gap-1.5 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full shrink-0 hover:bg-orange-500/20 active:scale-95 transition-all cursor-pointer"
+        >
+          <Flame className="w-4 h-4 text-orange-500 animate-pulse" />
+          <span className="text-sm font-black text-orange-500">
             {streak}
           </span>
-        </div>
+        </button>
       </div>
     </header>
   );

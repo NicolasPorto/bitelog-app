@@ -18,6 +18,7 @@ import {
   Minus,
   Target,
   ChevronRight,
+  PersonStanding
 } from "lucide-react";
 import { Input } from "../components/ui/Input";
 import {
@@ -379,14 +380,13 @@ export default function Profile({
                   {getActivityLabel(profile?.activity_level)}
                 </p>
                 <div className="flex gap-1 mt-2">
-                  {[1, 2, 3, 4, 5].map((step) => {
+                  {[1, 2, 3, 4].map((step) => {
                     const level = parseFloat(profile?.activity_level);
                     const active =
                       (step === 1 && level <= 1.2) ||
                       (step === 2 && level > 1.2 && level <= 1.375) ||
                       (step === 3 && level > 1.375 && level <= 1.55) ||
-                      (step === 4 && level > 1.55 && level <= 1.725) ||
-                      (step === 5 && level > 1.725);
+                      (step === 4 && level > 1.55);
                     return (
                       <div
                         key={step}
@@ -401,68 +401,55 @@ export default function Profile({
         )}
 
         {!isEditing && (
-          <div className="relative overflow-hidden rounded-[2rem] border border-border/60 bg-card p-6 shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-transparent pointer-events-none" />
-            <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
-
-            <div className="relative">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div
-                      className={`w-2 h-2 rounded-full animate-pulse ${bmiData.color.replace(
-                        "text",
-                        "bg",
-                      )}`}
-                    />
-
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                      {lang === "pt" ? "IMC Corporal" : "Body BMI"}
-                    </span>
+          <div className="relative overflow-hidden rounded-[2rem] border-2 border-border/80 bg-card p-6 shadow-[0_4px_0_0_rgba(0,0,0,0.02)] animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="relative z-10">
+              <div className="flex items-center justify-between border-b-2 border-border/40 pb-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 bg-amber-500/10 rounded-lg">
+                    <PersonStanding className="w-4 h-4 text-amber-500" />
                   </div>
-
-                  <h3 className="text-2xl font-black tracking-tight text-foreground">
-                    {lang === "pt" ? "Seu índice corporal" : "Your body index"}
-                  </h3>
-
-                  <p className="mt-1 text-sm text-muted-foreground max-w-[220px] leading-relaxed">
-                    {lang === "pt"
-                      ? "Baseado no seu peso e altura atuais."
-                      : "Based on your current weight and height."}
-                  </p>
+                  <span className="font-black uppercase tracking-widest text-xs text-foreground">
+                    {lang === "pt" ? "Índice Corporal" : "Body Index"}
+                  </span>
                 </div>
 
-                <div className="flex flex-col items-end">
-                  <div
-                    className={`flex h-20 w-20 items-center justify-center rounded-[1.8rem] border border-white/10 shadow-inner ${bmiData.bg}`}
-                  >
-                    <span className={`text-3xl font-black ${bmiData.color}`}>
-                      {bmiData.bmi || "--"}
-                    </span>
-                  </div>
-
-                  <div
-                    className={`mt-3 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider ${bmiData.bg} ${bmiData.color}`}
-                  >
-                    {bmiData.label}
-                  </div>
+                <div
+                  className={`px-3 py-1 border-2 rounded-full font-black text-[10px] uppercase tracking-wider bg-transparent ${bmiData.color} border-current`}
+                >
+                  {bmiData.label}
                 </div>
               </div>
 
-              <div className="mt-8">
+              <div className="flex flex-col items-center justify-center py-2 mb-6">
+                <span
+                  className={`text-6xl font-black tracking-tighter drop-shadow-sm ${bmiData.color}`}
+                >
+                  {bmiData.bmi || "--"}
+                </span>
+                <span className="text-xs font-bold text-foreground uppercase tracking-widest mt-2">
+                  Score Atual
+                </span>
+
+                <p className="text-[10px] font-medium text-muted-foreground/70 mt-2 text-center max-w-[200px] leading-relaxed">
+                  {lang === "pt"
+                    ? "Baseado no seu peso e altura atuais."
+                    : "Based on your current weight and height."}
+                </p>
+              </div>
+
+              <div className="mt-2 bg-muted/20 p-4 rounded-2xl border border-border/40">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                     {lang === "pt" ? "Faixa do IMC" : "BMI Range"}
                   </span>
-
                   <span className={`text-sm font-black ${bmiData.color}`}>
                     {bmiData.bmi}
                   </span>
                 </div>
 
                 <div className="relative">
-                  <div className="h-3 overflow-hidden rounded-full bg-muted">
-                    <div className="h-full w-full bg-gradient-to-r from-sky-400 via-emerald-400 via-amber-400 to-rose-500" />
+                  <div className="h-3 overflow-hidden rounded-full bg-muted border border-border/50">
+                    <div className="h-full w-full bg-gradient-to-r from-sky-400 via-emerald-400 via-amber-400 to-rose-500 opacity-90" />
                   </div>
 
                   {profile?.weight && profile?.height && (
@@ -475,17 +462,7 @@ export default function Profile({
                     >
                       <div className="flex flex-col items-center">
                         <div
-                          className={`h-5 w-5 rounded-full border-4 border-background shadow-lg ${bmiData.color.replace(
-                            "text",
-                            "bg",
-                          )}`}
-                        />
-
-                        <div
-                          className={`mt-1 h-6 w-1 rounded-full opacity-80 ${bmiData.color.replace(
-                            "text",
-                            "bg",
-                          )}`}
+                          className={`h-5 w-5 rounded-full border-4 border-background shadow-md ${bmiData.color.replace("text", "bg")}`}
                         />
                       </div>
                     </div>
@@ -494,32 +471,19 @@ export default function Profile({
 
                 <div className="mt-4 grid grid-cols-4 gap-2">
                   {[
-                    {
-                      label: lang === "pt" ? "Baixo" : "Low",
-                      value: "18.5",
-                    },
-                    {
-                      label: lang === "pt" ? "Ideal" : "Ideal",
-                      value: "25",
-                    },
-                    {
-                      label: lang === "pt" ? "Sobre" : "Over",
-                      value: "30",
-                    },
-                    {
-                      label: lang === "pt" ? "Obeso" : "Obese",
-                      value: "35+",
-                    },
+                    { label: lang === "pt" ? "Baixo" : "Low", value: "18.5" },
+                    { label: lang === "pt" ? "Ideal" : "Ideal", value: "25" },
+                    { label: lang === "pt" ? "Sobre" : "Over", value: "30" },
+                    { label: lang === "pt" ? "Obeso" : "Obese", value: "35+" },
                   ].map((item, idx) => (
                     <div
                       key={idx}
-                      className="rounded-2xl border border-border/40 bg-background/60 p-3 text-center"
+                      className="rounded-xl border border-border/60 bg-background/80 p-2 text-center"
                     >
                       <p className="text-sm font-black text-foreground">
                         {item.value}
                       </p>
-
-                      <p className="mt-1 text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
+                      <p className="mt-1 text-[8px] font-bold uppercase tracking-widest text-muted-foreground">
                         {item.label}
                       </p>
                     </div>
