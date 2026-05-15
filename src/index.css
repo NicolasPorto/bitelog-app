@@ -68,4 +68,121 @@
   .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  @keyframes loader-wave {
+    0%, 100% { transform: translateX(-50%) translateY(2px); }
+    50% { transform: translateX(-30%) translateY(-2px); }
+  }
+
+  @keyframes loader-particle-float {
+    0% {
+      transform: translateY(0) scale(0.6);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-40px) scale(1);
+      opacity: 0;
+    }
+  }
+
+  @keyframes loader-steam-rise {
+    0% {
+      transform: translateY(0) scaleX(1);
+      opacity: 0;
+    }
+    30% {
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateY(-24px) scaleX(1.6);
+      opacity: 0;
+    }
+  }
+
+  @keyframes loader-text-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+      filter: blur(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes loader-sub-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes loader-bowl-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+}
+
+@layer components {
+  .loader-wave {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, hsl(var(--primary) / 0.35) 0%, transparent 70%);
+    border-radius: 40%;
+    animation: loader-wave 2s ease-in-out infinite;
+  }
+
+  .loader-particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background: hsl(var(--primary) / 0.7);
+    bottom: 8px;
+    left: 50%;
+    margin-left: -2.5px;
+    animation: loader-particle-float 1.6s ease-out infinite;
+  }
+
+  .loader-particle-1 { animation-delay: 0s; margin-left: -8px; background: hsl(var(--primary) / 0.6); }
+  .loader-particle-2 { animation-delay: 0.3s; margin-left: 2px; width: 4px; height: 4px; background: hsl(var(--accent) / 0.6); }
+  .loader-particle-3 { animation-delay: 0.6s; margin-left: -4px; width: 6px; height: 6px; background: hsl(var(--primary) / 0.5); }
+  .loader-particle-4 { animation-delay: 0.9s; margin-left: 6px; width: 3px; height: 3px; background: hsl(var(--accent) / 0.5); }
+  .loader-particle-5 { animation-delay: 1.2s; margin-left: -10px; width: 4px; height: 4px; background: hsl(var(--primary) / 0.4); }
+
+  .loader-steam {
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    height: 14px;
+    background: linear-gradient(to top, hsl(var(--muted-foreground) / 0.15), transparent);
+    border-radius: 9999px;
+    animation: loader-steam-rise 2s ease-out infinite;
+  }
+
+  .loader-steam-1 { left: 30%; animation-delay: 0s; }
+  .loader-steam-2 { left: 50%; animation-delay: 0.6s; width: 5px; }
+  .loader-steam-3 { left: 65%; animation-delay: 1.2s; width: 4px; }
+
+  .loader-text-reveal {
+    animation: loader-text-reveal 0.7s ease-out 0.3s both;
+  }
+
+  .loader-sub-reveal {
+    animation: loader-sub-reveal 0.6s ease-out 0.7s both;
+  }
 }

@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Onboarding from "./pages/Onboarding";
 import Profile from "./pages/Profile";
+import Loader from "./components/ui/Loader";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -66,21 +67,14 @@ export default function App() {
       setProfile(data);
     } catch (err) {
       console.error("Erro ao buscar perfil:", err);
-    } finally {
-      setLoadingProfile(false);
-    }
+    } 
   };
 
   if (!session) return <Auth lang={lang} setLang={setLang} />;
 
   if (loadingProfile)
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
-        <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-        <span className="text-primary font-bold tracking-widest text-xs uppercase animate-pulse">
-          Carregando BiteLog
-        </span>
-      </div>
+      <Loader onComplete={() => setLoadingProfile(false)} minDuration={2200} />
     );
 
   if (!profile?.is_onboarded) {
