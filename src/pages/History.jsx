@@ -13,6 +13,7 @@ import { supabase } from "../supabase";
 import { translations } from "../translations";
 
 import { categoryConfig } from "../constants/constants";
+import { getLocalDateKey, formatDate, formatTime } from "../utils/date";
 
 export default function History({ setPage, lang }) {
   const [historyGrouped, setHistoryGrouped] = useState([]);
@@ -33,9 +34,7 @@ export default function History({ setPage, lang }) {
     if (!data) return;
 
     const grouped = data.reduce((acc, meal) => {
-      const date = new Date(meal.created_at)
-        .toISOString()
-        .split("T")[0];
+      const date = getLocalDateKey(new Date(meal.created_at));
 
       if (!acc[date]) {
         acc[date] = {
@@ -67,24 +66,11 @@ export default function History({ setPage, lang }) {
 
     historyGrouped.forEach((day) => {
       day.meals.forEach((meal) => {
-        const date = day.date
-          .split("-")
-          .reverse()
-          .join("/");
+        const date = formatDate(day.date, lang);
 
-        const time = new Date(
-          meal.created_at
-        ).toLocaleTimeString(
-          lang === "pt" ? "pt-BR" : "en-US",
-          {
-            hour: "2-digit",
-            minute: "2-digit",
-          }
-        );
+        const time = formatTime(meal.created_at, lang);
 
-        const notes = meal.notes
-          ? `"${meal.notes}"`
-          : "";
+        const notes = meal.notes ? `"${meal.notes}"` : "";
 
         csvContent += `${date},${time},${t.meal_categories[meal.meal_type]},${meal.title},${meal.calories || 0},${notes}\n`;
       });
@@ -102,9 +88,7 @@ export default function History({ setPage, lang }) {
 
     link.setAttribute(
       "download",
-      `BiteLog_Report_${
-        new Date().toISOString().split("T")[0]
-      }.csv`
+      `BiteLog_Report_${new Date().toISOString().split("T")[0]}.csv`,
     );
 
     document.body.appendChild(link);
@@ -114,9 +98,7 @@ export default function History({ setPage, lang }) {
     document.body.removeChild(link);
   };
 
-  const todayKey = new Date()
-    .toISOString()
-    .split("T")[0];
+  const todayKey = getLocalDateKey();
 
   return (
     <div className="min-h-[100dvh] bg-background flex flex-col text-foreground pb-24">
@@ -154,23 +136,16 @@ export default function History({ setPage, lang }) {
               <CalendarDays className="w-8 h-8 text-muted-foreground/50" />
             </div>
 
-            <p className="text-muted-foreground text-sm">
-              {t.no_history}
-            </p>
+            <p className="text-muted-foreground text-sm">{t.no_history}</p>
           </div>
         )}
 
         {historyGrouped.map((day) => {
-          const isToday =
-            day.date === todayKey;
+          const isToday = day.date === todayKey;
 
-          const isExpanded =
-            expandedDay === day.date;
+          const isExpanded = expandedDay === day.date;
 
-          const formattedDate = day.date
-            .split("-")
-            .reverse()
-            .join("/");
+          const formattedDate = formatDate(day.date, lang);
 
           return (
             <div
@@ -186,13 +161,7 @@ export default function History({ setPage, lang }) {
               `}
             >
               <button
-                onClick={() =>
-                  setExpandedDay(
-                    isExpanded
-                      ? null
-                      : day.date
-                  )
-                }
+                onClick={() => setExpandedDay(isExpanded ? null : day.date)}
                 className="w-full p-4 flex items-center justify-between outline-none"
               >
                 <div className="flex items-center gap-3">
@@ -200,11 +169,7 @@ export default function History({ setPage, lang }) {
                     <CalendarDays
                       className={`
                         w-5 h-5
-                        ${
-                          isToday
-                            ? "text-primary"
-                            : "text-muted-foreground"
-                        }
+                        ${isToday ? "text-primary" : "text-muted-foreground"}
                       `}
                     />
                   </div>
@@ -216,9 +181,7 @@ export default function History({ setPage, lang }) {
 
                     <p className="text-xs text-muted-foreground">
                       {day.meals.length}{" "}
-                      {day.meals.length === 1
-                        ? t.meal_count
-                        : t.meals_count}
+                      {day.meals.length === 1 ? t.meal_count : t.meals_count}
                     </p>
                   </div>
                 </div>
@@ -251,13 +214,9 @@ export default function History({ setPage, lang }) {
                   <div className="h-px bg-border/40 mb-3" />
 
                   {day.meals.map((meal) => {
-                    const config =
-                      categoryConfig[
-                        meal.meal_type
-                      ];
+                    const config = categoryConfig[meal.meal_type];
 
-                    const Icon =
-                      config?.icon;
+                    const Icon = config?.icon;
 
                     return (
                       <div
@@ -272,9 +231,7 @@ export default function History({ setPage, lang }) {
                       >
                         <div className="w-8 h-8 rounded-lg bg-background/60 flex items-center justify-center shrink-0">
                           {Icon && (
-                            <Icon
-                              className={`w-4 h-4 ${config.iconClass}`}
-                            />
+                            <Icon className={`w-4 h-4 ${config.iconClass}`} />
                           )}
                         </div>
 
@@ -285,13 +242,7 @@ export default function History({ setPage, lang }) {
 
                           <div className="flex items-center gap-2 mt-0.5">
                             <span className="text-[10px] text-muted-foreground">
-                              {
-                                t
-                                  .meal_categories[
-                                  meal
-                                    .meal_type
-                                ]
-                              }
+                              {t.meal_categories[meal.meal_type]}
                             </span>
 
                             {meal.calories && (
@@ -311,18 +262,7 @@ export default function History({ setPage, lang }) {
                         <span className="text-[10px] text-muted-foreground/50 flex items-center gap-0.5 shrink-0">
                           <Clock className="w-3 h-3" />
 
-                          {new Date(
-                            meal.created_at
-                          ).toLocaleTimeString(
-                            lang === "pt"
-                              ? "pt-BR"
-                              : "en-US",
-                            {
-                              hour: "2-digit",
-                              minute:
-                                "2-digit",
-                            }
-                          )}
+                          {formatTime(meal.created_at, lang)}
                         </span>
                       </div>
                     );

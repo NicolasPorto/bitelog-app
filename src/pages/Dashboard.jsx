@@ -8,6 +8,7 @@ import MealForm from "../components/dashboard/MealForm";
 import EmptyState from "../components/dashboard/EmptyState";
 
 import { translations } from "../translations";
+import { getLocalDateKey, getStartOfLocalDay } from "../utils/date";
 
 export default function Dashboard({ session, setPage, lang }) {
   const [meals, setMeals] = useState([]);
@@ -46,8 +47,7 @@ export default function Dashboard({ session, setPage, lang }) {
   };
 
   const fetchDashboardData = async () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = getStartOfLocalDay();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
@@ -86,7 +86,7 @@ export default function Dashboard({ session, setPage, lang }) {
   };
 
   const updateStreak = async () => {
-    const todayStr = new Date().toISOString().split("T")[0];
+    const todayStr = getLocalDateKey();
     const { data: profile } = await supabase
       .from("profiles")
       .select("streak_count, last_active_date")
@@ -94,9 +94,12 @@ export default function Dashboard({ session, setPage, lang }) {
       .single();
 
     if (profile && profile.last_active_date !== todayStr) {
-      const yesterdayStr = new Date(Date.now() - 86400000)
-        .toISOString()
-        .split("T")[0];
+      const yesterday = new Date();
+
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      const yesterdayStr = getLocalDateKey(yesterday);
+
       const newStreak =
         profile.last_active_date === yesterdayStr
           ? (profile.streak_count || 0) + 1

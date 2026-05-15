@@ -1,6 +1,7 @@
 import { Trash2, Clock, Pencil } from "lucide-react";
 
 import { categoryConfig } from "../../constants/constants";
+import { formatTime } from "../../utils/date";
 
 export default function MealCard({ meal, onDelete, onEdit, t, lang }) {
   const config = categoryConfig[meal.meal_type];
@@ -93,13 +94,7 @@ export default function MealCard({ meal, onDelete, onEdit, t, lang }) {
   <span className="text-[10px] text-muted-foreground/50 flex items-center gap-1">
     <Clock className="w-3 h-3" />
 
-    {new Date(meal.created_at).toLocaleTimeString(
-      lang === "pt" ? "pt-BR" : "en-US",
-      {
-        hour: "2-digit",
-        minute: "2-digit",
-      }
-    )}
+    {formatTime(meal.created_at, lang)}
   </span>
 </div>
     </div>
